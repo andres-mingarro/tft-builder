@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { TableRow, RoleStyle } from '@/data/tabla';
+import { recipes } from '@/data/recipes';
 import styles from './ChampionTable.module.scss';
 
 const costClass: Record<number, string> = {
@@ -88,18 +89,37 @@ export default function ChampionTable({ rows }: ChampionTableProps) {
               </td>
               <td>
                 <div className={styles.itemsCell}>
-                  {row.items.map((item, i) => (
-                    <div key={i} className={styles.itemSlot}>
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={54}
-                        height={54}
-                        unoptimized
-                      />
-                      <div className={styles.ilabel}>{item.name}</div>
-                    </div>
-                  ))}
+                  {row.items.map((item, i) => {
+                    const recipe = recipes[item.name];
+                    return (
+                      <div key={i} className={styles.itemSlot}>
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={54}
+                          height={54}
+                          unoptimized
+                        />
+                        {recipe && (
+                          <div className={styles.components}>
+                            {recipe.map((comp, j) => (
+                              <Image
+                                key={j}
+                                src={comp.image}
+                                alt={comp.name}
+                                title={comp.name}
+                                width={27}
+                                height={27}
+                                unoptimized
+                                className={styles.compImg}
+                                style={{ width: 27, height: 27 }}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </td>
               <td>

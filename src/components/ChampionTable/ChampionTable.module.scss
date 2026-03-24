@@ -188,6 +188,21 @@
   }
 }
 
+.components {
+  display: flex;
+  gap: 0;
+  width: 54px;
+}
+
+.compImg {
+  width: 27px;
+  height: 27px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  background: #0f1929;
+}
+
 .ilabel {
   font-size: 0.59rem;
   color: var(--muted);
