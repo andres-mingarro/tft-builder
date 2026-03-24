@@ -1,0 +1,52 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.highlighted {
+  border-color: var(--yordle);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot_yordle {
+  background: var(--yordle);
+  box-shadow: 0 0 8px var(--yordle);
+}
+
+.dot_gold {
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+}
+
+.count {
+  background: var(--yordle);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 1px 5px;
+}
+
+.countGold {
+  background: var(--gold);
+  color: #0a0e1a;
+}

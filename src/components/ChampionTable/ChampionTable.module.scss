@@ -1,0 +1,214 @@
+.tableWrap {
+  overflow-x: auto;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: linear-gradient(90deg, #111e32, #162436);
+    border-bottom: 2px solid var(--gold);
+  }
+
+  thead th {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: rgba(155, 89, 182, 0.07);
+    }
+  }
+
+  td {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+  }
+}
+
+/* Champion cell */
+.champCell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 160px;
+}
+
+.portraitWrap {
+  position: relative;
+  flex-shrink: 0;
+
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 11px;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    display: block;
+    background: #0f1929;
+  }
+}
+
+.carry img {
+  border-color: var(--gold);
+  box-shadow: 0 0 14px rgba(200, 155, 60, 0.45);
+}
+
+.unlock img {
+  border-color: var(--yordle);
+  border-style: dashed;
+}
+
+.plabel {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  border-radius: 4px;
+  padding: 1px 4px;
+  white-space: nowrap;
+}
+
+.plabelCarry {
+  background: var(--gold);
+  color: #0a0e1a;
+}
+
+.plabelUnlock {
+  background: var(--yordle);
+  color: #fff;
+}
+
+.champInfo {
+  .champName {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #e8f0f8;
+    margin-bottom: 3px;
+  }
+}
+
+.costBadge {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.c1 { background: #4a5568; color: #e2e8f0; }
+.c2 { background: #276749; color: #9ae6b4; }
+.c3 { background: #2b6cb0; color: #90cdf4; }
+.c4 { background: #553c9a; color: #d6bcfa; }
+
+/* Role badge */
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.73rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rCarry { background: rgba(200, 155, 60, 0.15);  color: var(--gold-light); border: 1px solid rgba(200, 155, 60, 0.4); }
+.rAp    { background: rgba(124, 92, 219, 0.2);   color: #c4b5fd;           border: 1px solid rgba(124, 92, 219, 0.4); }
+.rTank  { background: rgba(74, 158, 112, 0.15);  color: #86efac;           border: 1px solid rgba(74, 158, 112, 0.4); }
+.rFlex  { background: rgba(56, 189, 248, 0.15);  color: #7dd3fc;           border: 1px solid rgba(56, 189, 248, 0.4); }
+
+/* Traits */
+.traitsCell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.ttag {
+  font-size: 0.67rem;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.ttY { background: rgba(155, 89, 182, 0.22); color: var(--yordle-light); border: 1px solid rgba(155, 89, 182, 0.4); }
+.ttO { background: rgba(200, 155, 60, 0.12); color: var(--gold-light);   border: 1px solid rgba(200, 155, 60, 0.25); }
+
+/* Items */
+.itemsCell {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.itemSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  img {
+    width: 54px;
+    height: 54px;
+    border-radius: 9px;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    background: #0f1929;
+    display: block;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    cursor: default;
+
+    &:hover {
+      transform: scale(1.16);
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(200, 155, 60, 0.45);
+    }
+  }
+}
+
+.ilabel {
+  font-size: 0.59rem;
+  color: var(--muted);
+  text-align: center;
+  max-width: 58px;
+  line-height: 1.2;
+}
+
+/* Stars */
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star      { color: var(--gold); font-size: 0.92rem; }
+.starEmpty { color: #1e2e42;     font-size: 0.92rem; }
+
+/* Notes */
+.note {
+  font-size: 0.77rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 195px;
+}

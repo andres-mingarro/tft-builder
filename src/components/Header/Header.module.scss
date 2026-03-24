@@ -1,0 +1,72 @@
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.traitBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #3b1560, #6b2fa0);
+  border: 1px solid var(--yordle);
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--yordle-light);
+  margin-bottom: 1rem;
+  box-shadow: 0 0 20px rgba(155, 89, 182, 0.25);
+}
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  background: linear-gradient(135deg, #9b6a1a 0%, var(--gold) 30%, var(--gold-light) 60%, var(--gold) 80%, #9b6a1a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.04em;
+}
+
+.meta {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tablaBtn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background: rgba(200, 155, 60, 0.08);
+  text-decoration: none;
+  transition: background 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    background: rgba(200, 155, 60, 0.18);
+    box-shadow: 0 0 12px rgba(200, 155, 60, 0.25);
+  }
+}
+
+.chip {
+  font-size: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.2rem 0.7rem;
+  color: var(--muted);
+
+  strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+}
