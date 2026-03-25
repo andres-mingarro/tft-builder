@@ -24,7 +24,6 @@ npm-debug.log*
 tsconfig.tsbuildinfo
 next-env.d.ts
 
-# Database (solo el archivo de datos, las migraciones sí van al repo)
-database/tft.db
+# Database WAL files temporales
 database/tft.db-shm
 database/tft.db-wal
