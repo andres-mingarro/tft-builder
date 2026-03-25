@@ -8,7 +8,7 @@ interface TipsSectionProps {
 
 export default function TipsSection({ tips }: TipsSectionProps) {
   return (
-    <SectionWrap title="Tips de Juego">
+    <SectionWrap title="Tips de Juego" className="TipsSection">
       <ul className={styles.grid}>
         {tips.map((tip, i) => (
           <li key={i}>

@@ -2,7 +2,7 @@ import styles from './Footer.module.scss';
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} Footer`}>
       <p>TFT Set 16: Lore &amp; Legends · Yordle 8 Reroll Build Guide</p>
       <p>
         Imágenes:{' '}

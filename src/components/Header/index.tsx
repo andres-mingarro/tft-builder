@@ -3,7 +3,7 @@ import styles from './Header.module.scss';
 
 export default function Header() {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} Header`}>
       <div className={styles.traitBadge}>🐾 TFT Set 16: Lore &amp; Legends</div>
       <h1 className={styles.title}>Yordle Build Guide</h1>
       <div className={styles.meta}>

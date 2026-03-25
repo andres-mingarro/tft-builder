@@ -23,7 +23,7 @@ interface ChampionsSectionProps {
 
 export default function ChampionsSection({ champions }: ChampionsSectionProps) {
   return (
-    <SectionWrap title="Campeones — Board Final">
+    <SectionWrap title="Campeones — Board Final" className="ChampionsSection">
       <div className={styles.grid}>
         {champions.map((champ) => (
           <div

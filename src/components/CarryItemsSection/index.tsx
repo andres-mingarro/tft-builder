@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import SectionWrap from '@/components/SectionWrap';
+import Tooltip from '@/components/Tooltip';
+import ItemTooltipContent from '@/components/Tooltip/ItemTooltipContent';
 import { CarryBuild } from '@/data/build';
 import styles from './CarryItemsSection.module.scss';
 
@@ -9,7 +11,7 @@ interface CarryItemsSectionProps {
 
 export default function CarryItemsSection({ carries }: CarryItemsSectionProps) {
   return (
-    <SectionWrap title="Items por Carry">
+    <SectionWrap title="Items por Carry" className="CarryItemsSection">
       <div className={styles.grid}>
         {carries.map((carry) => (
           <div
@@ -32,15 +34,17 @@ export default function CarryItemsSection({ carries }: CarryItemsSectionProps) {
             </div>
             <div className={styles.itemsRow}>
               {carry.items.map((item, i) => (
-                <div key={i} className={styles.itemSlot}>
-                  <Image
-                    className={styles.itemImg}
-                    src={item.image}
-                    alt={item.name}
-                    width={56}
-                    height={56}
-                    unoptimized
-                  />
+                <div key={i} className={`${styles.itemSlot} item-${item.image.split('/').pop()!.replace('.png', '')}`}>
+                  <Tooltip content={<ItemTooltipContent item={item} />}>
+                    <Image
+                      className={styles.itemImg}
+                      src={item.image}
+                      alt={item.name}
+                      width={56}
+                      height={56}
+                      unoptimized
+                    />
+                  </Tooltip>
                   <div className={styles.itemName}>{item.name}</div>
                 </div>
               ))}

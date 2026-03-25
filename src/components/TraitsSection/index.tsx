@@ -8,7 +8,7 @@ interface TraitsSectionProps {
 
 export default function TraitsSection({ traits }: TraitsSectionProps) {
   return (
-    <SectionWrap title="Traits Activos">
+    <SectionWrap title="Traits Activos" className="TraitsSection">
       <div className={styles.row}>
         {traits.map((trait) => (
           <div

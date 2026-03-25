@@ -14,7 +14,7 @@ interface AugmentsSectionProps {
 
 export default function AugmentsSection({ augments }: AugmentsSectionProps) {
   return (
-    <SectionWrap title="Mejores Augments">
+    <SectionWrap title="Mejores Augments" className="AugmentsSection">
       <div className={styles.grid}>
         {augments.map((aug) => (
           <div key={aug.name} className={`${styles.card} ${styles[aug.tier]}`}>

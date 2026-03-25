@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import { TableRow, RoleStyle } from '@/data/tabla';
 import { recipes } from '@/data/recipes';
+import Tooltip from '@/components/Tooltip';
+import ItemTooltipContent from '@/components/Tooltip/ItemTooltipContent';
+import NoteTooltipContent from '@/components/Tooltip/NoteTooltipContent';
 import styles from './ChampionTable.module.scss';
 
 const costClass: Record<number, string> = {
@@ -30,7 +33,7 @@ interface ChampionTableProps {
 
 export default function ChampionTable({ rows }: ChampionTableProps) {
   return (
-    <div className={styles.tableWrap}>
+    <div className={`${styles.tableWrap} ChampionTable`}>
       <table>
         <thead>
           <tr>
@@ -38,8 +41,6 @@ export default function ChampionTable({ rows }: ChampionTableProps) {
             <th>Rol</th>
             <th>Traits</th>
             <th>Items Recomendados</th>
-            <th>Prioridad</th>
-            <th>Notas</th>
           </tr>
         </thead>
         <tbody>
@@ -48,13 +49,15 @@ export default function ChampionTable({ rows }: ChampionTableProps) {
               <td>
                 <div className={styles.champCell}>
                   <div className={`${styles.portraitWrap} ${styles[row.portraitVariant]}`}>
-                    <Image
-                      src={row.image}
-                      alt={row.name}
-                      width={60}
-                      height={60}
-                      unoptimized
-                    />
+                    <Tooltip content={<NoteTooltipContent text={row.note} />}>
+                      <Image
+                        src={row.image}
+                        alt={row.name}
+                        width={60}
+                        height={60}
+                        unoptimized
+                      />
+                    </Tooltip>
                     {row.portraitVariant === 'carry' && (
                       <span className={`${styles.plabel} ${styles.plabelCarry}`}>CARRY</span>
                     )}
@@ -67,6 +70,13 @@ export default function ChampionTable({ rows }: ChampionTableProps) {
                     <span className={`${styles.costBadge} ${costClass[row.cost]}`}>
                       {costLabel[row.cost]}
                     </span>
+                    <div className={styles.stars}>
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <span key={i} className={i < row.priority ? styles.star : styles.starEmpty}>
+                          ★
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </td>
@@ -92,14 +102,16 @@ export default function ChampionTable({ rows }: ChampionTableProps) {
                   {row.items.map((item, i) => {
                     const recipe = recipes[item.name];
                     return (
-                      <div key={i} className={styles.itemSlot}>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          width={54}
-                          height={54}
-                          unoptimized
-                        />
+                      <div key={i} className={`${styles.itemSlot} item-${item.image.split('/').pop()!.replace('.png', '')}`}>
+                        <Tooltip content={<ItemTooltipContent item={item} />}>
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={54}
+                            height={54}
+                            unoptimized
+                          />
+                        </Tooltip>
                         {recipe && (
                           <div className={styles.components}>
                             {recipe.map((comp, j) => (
@@ -121,18 +133,6 @@ export default function ChampionTable({ rows }: ChampionTableProps) {
                     );
                   })}
                 </div>
-              </td>
-              <td>
-                <div className={styles.stars}>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span key={i} className={i < row.priority ? styles.star : styles.starEmpty}>
-                      ★
-                    </span>
-                  ))}
-                </div>
-              </td>
-              <td>
-                <p className={styles.note}>{row.note}</p>
               </td>
             </tr>
           ))}
