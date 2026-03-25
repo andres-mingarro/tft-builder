@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import {
   DndContext,
@@ -17,12 +17,15 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { TableRow, RoleStyle } from '@/data/tabla';
+import { TableRow, TableItem, RoleStyle } from '@/data/tabla';
+import { Item } from '@/data/build';
 import { recipes } from '@/data/recipes';
+import { legendItems } from '@/data/tabla';
 import Tooltip from '@/components/Tooltip';
 import ItemTooltipContent from '@/components/Tooltip/ItemTooltipContent';
 import NoteTooltipContent from '@/components/Tooltip/NoteTooltipContent';
-import { updateChampionPositions } from '@/app/tabla/actions';
+import ItemPicker from '@/components/ItemPicker';
+import { updateChampionPositions, updateChampionItem } from '@/app/tabla/actions';
 import styles from './ChampionTable.module.scss';
 
 const costClass: Record<number, string> = {
@@ -35,21 +38,27 @@ const roleClass: Record<RoleStyle, string> = {
   carry: styles.rCarry, ap: styles.rAp, tank: styles.rTank, flex: styles.rFlex,
 };
 
-function SortableRow({ row }: { row: TableRow }) {
+interface ActivePicker {
+  itemDbId: number;
+  currentName: string;
+  anchorRect: DOMRect;
+  champId: number;
+  slot: number;
+}
+
+interface SortableRowProps {
+  row: TableRow;
+  onItemClick: (item: TableItem, champId: number, slot: number, rect: DOMRect) => void;
+}
+
+function SortableRow({ row, onItemClick }: SortableRowProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: row.id });
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
+  const style = { transform: CSS.Transform.toString(transform), transition };
 
   return (
-    <tr
-      ref={setNodeRef}
-      style={style}
-      className={isDragging ? styles.rowDragging : undefined}
-    >
+    <tr ref={setNodeRef} style={style} className={isDragging ? styles.rowDragging : undefined}>
       <td>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span className={styles.dragHandle} {...attributes} {...listeners}>⠿</span>
@@ -98,12 +107,26 @@ function SortableRow({ row }: { row: TableRow }) {
       </td>
       <td>
         <div className={styles.itemsCell}>
-          {row.items.map((item, i) => {
+          {row.items.map((item, slot) => {
             const recipe = recipes[item.name];
             return (
-              <div key={i} className={`${styles.itemSlot} item-${item.image.split('/').pop()!.replace('.png', '')}`}>
+              <div
+                key={item.dbId}
+                className={`${styles.itemSlot} item-${item.image.split('/').pop()!.replace('.png', '')}`}
+              >
                 <Tooltip content={<ItemTooltipContent item={item} />}>
-                  <Image src={item.image} alt={item.name} width={54} height={54} unoptimized />
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={54}
+                    height={54}
+                    unoptimized
+                    style={{ cursor: 'pointer' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onItemClick(item, row.id, slot, (e.currentTarget as HTMLElement).getBoundingClientRect());
+                    }}
+                  />
                 </Tooltip>
                 {recipe && (
                   <div className={styles.components}>
@@ -137,6 +160,7 @@ interface ChampionTableProps {
 
 export default function ChampionTable({ rows: initialRows }: ChampionTableProps) {
   const [rows, setRows] = useState(initialRows);
+  const [activePicker, setActivePicker] = useState<ActivePicker | null>(null);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -147,12 +171,37 @@ export default function ChampionTable({ rows: initialRows }: ChampionTableProps)
     const oldIndex = rows.findIndex((r) => r.id === active.id);
     const newIndex = rows.findIndex((r) => r.id === over.id);
     const newRows = arrayMove(rows, oldIndex, newIndex);
-
     setRows(newRows);
+    await updateChampionPositions(newRows.map((r, i) => ({ id: r.id, position: i })));
+  }
 
-    await updateChampionPositions(
-      newRows.map((r, i) => ({ id: r.id, position: i }))
+  const handleItemClick = useCallback(
+    (item: TableItem, champId: number, slot: number, rect: DOMRect) => {
+      setActivePicker({ itemDbId: item.dbId, currentName: item.name, anchorRect: rect, champId, slot });
+    },
+    []
+  );
+
+  async function handleItemSelect(newItem: Item) {
+    if (!activePicker) return;
+    const { itemDbId, champId, slot } = activePicker;
+
+    // Optimistic update
+    setRows((prev) =>
+      prev.map((row) =>
+        row.id !== champId
+          ? row
+          : {
+              ...row,
+              items: row.items.map((item, i) =>
+                i === slot ? { ...item, name: newItem.name, image: newItem.image } : item
+              ),
+            }
+      )
     );
+
+    setActivePicker(null);
+    await updateChampionItem(itemDbId, newItem.name, newItem.image);
   }
 
   return (
@@ -170,12 +219,22 @@ export default function ChampionTable({ rows: initialRows }: ChampionTableProps)
           <tbody>
             <SortableContext items={rows.map((r) => r.id)} strategy={verticalListSortingStrategy}>
               {rows.map((row) => (
-                <SortableRow key={row.id} row={row} />
+                <SortableRow key={row.id} row={row} onItemClick={handleItemClick} />
               ))}
             </SortableContext>
           </tbody>
         </table>
       </DndContext>
+
+      {activePicker && (
+        <ItemPicker
+          currentItem={activePicker.currentName}
+          options={legendItems}
+          anchorRect={activePicker.anchorRect}
+          onSelect={handleItemSelect}
+          onClose={() => setActivePicker(null)}
+        />
+      )}
     </div>
   );
 }

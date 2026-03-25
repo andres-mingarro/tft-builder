@@ -3,6 +3,10 @@ import { Item, Tag } from './build';
 export type RoleStyle = 'carry' | 'ap' | 'tank' | 'flex';
 export type PortraitVariant = 'carry' | 'unlock' | 'default';
 
+export interface TableItem extends Item {
+  dbId: number; // id en build_champion_items
+}
+
 export interface TableRow {
   id: number;
   name: string;
@@ -13,7 +17,7 @@ export interface TableRow {
   roleLabel: string;
   roleStyle: RoleStyle;
   tags: Tag[];
-  items: Item[];
+  items: TableItem[];
   priority: number; // 1-5
   note: string;
 }

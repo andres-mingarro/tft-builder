@@ -1,8 +1,8 @@
 import { db } from './index';
 import { buildChampions } from './schema';
 import { eq } from 'drizzle-orm';
-import type { TableRow, RoleStyle, PortraitVariant } from '@/data/tabla';
-import type { Tag, Item } from '@/data/build';
+import type { TableRow, TableItem, RoleStyle, PortraitVariant } from '@/data/tabla';
+import type { Tag } from '@/data/build';
 
 export async function getTableRows(buildId: number): Promise<TableRow[]> {
   const champions = await db.query.buildChampions.findMany({
@@ -23,7 +23,7 @@ export async function getTableRows(buildId: number): Promise<TableRow[]> {
     tags: JSON.parse(champ.tags) as Tag[],
     items: champ.items
       .sort((a, b) => a.slot - b.slot)
-      .map((i) => ({ name: i.itemName, image: i.itemImage })) as Item[],
+      .map((i) => ({ dbId: i.id, name: i.itemName, image: i.itemImage })) as TableItem[],
     priority: champ.priority ?? 3,
     note: champ.note ?? '',
   }));
