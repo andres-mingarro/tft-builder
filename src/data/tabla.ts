@@ -4,6 +4,7 @@ export type RoleStyle = 'carry' | 'ap' | 'tank' | 'flex';
 export type PortraitVariant = 'carry' | 'unlock' | 'default';
 
 export interface TableRow {
+  id: number;
   name: string;
   image: string;
   cost: 1 | 2 | 3 | 4;
@@ -19,6 +20,7 @@ export interface TableRow {
 
 export const tableRows: TableRow[] = [
   {
+    id: 0,
     name: 'Teemo',
     image: '/tft-assets/champions/Teemo.png',
     cost: 1,
@@ -36,6 +38,7 @@ export const tableRows: TableRow[] = [
     note: 'Carry principal. Rageblade + Jeweled Gauntlet para hongos críticos AP. Buscar 3⭐.',
   },
   {
+    id: 0,
     name: 'Veigar',
     image: '/tft-assets/champions/Veigar.png',
     cost: 3,
@@ -53,6 +56,7 @@ export const tableRows: TableRow[] = [
     note: 'Desbloquear: colocar 2× Rabadon en una unidad. Burst masivo con Shojin.',
   },
   {
+    id: 0,
     name: 'Fizz',
     image: '/tft-assets/champions/Fizz.png',
     cost: 3,
@@ -70,6 +74,7 @@ export const tableRows: TableRow[] = [
     note: 'Desbloquear: 5 Yordle/Bilgewater en tablero siendo nivel 7. Jeweled Gauntlet para crits de habilidad.',
   },
   {
+    id: 0,
     name: 'Kennen',
     image: '/tft-assets/champions/Kennen.png',
     cost: 3,
@@ -87,6 +92,7 @@ export const tableRows: TableRow[] = [
     note: 'Frontline + CC masivo. Gargoyle escala con enemigos que lo atacan.',
   },
   {
+    id: 0,
     name: 'Lulu',
     image: '/tft-assets/champions/Lulu.png',
     cost: 3,
@@ -104,6 +110,7 @@ export const tableRows: TableRow[] = [
     note: 'Caster AP de apoyo. Shojin para castear seguido, Jeweled para crits de habilidad.',
   },
   {
+    id: 0,
     name: 'Poppy',
     image: '/tft-assets/champions/Poppy.png',
     cost: 3,
@@ -121,6 +128,7 @@ export const tableRows: TableRow[] = [
     note: 'Frontline secundaria. Sunfire quema al frente. Warmog para máxima supervivencia.',
   },
   {
+    id: 0,
     name: 'Rumble',
     image: '/tft-assets/champions/Rumble.png',
     cost: 2,
@@ -138,6 +146,7 @@ export const tableRows: TableRow[] = [
     note: 'Bruiser tanque. Gargoyle + Dragon\'s Claw para resistencia física y mágica.',
   },
   {
+    id: 0,
     name: 'Tristana',
     image: '/tft-assets/champions/Tristana.png',
     cost: 2,
@@ -155,6 +164,7 @@ export const tableRows: TableRow[] = [
     note: 'Carry AD de respaldo. Usa sus items solo si los carries AP están cubiertos.',
   },
   {
+    id: 0,
     name: 'Kobuko & Yuumi',
     image: '/tft-assets/champions/Kobuko.png',
     cost: 4,

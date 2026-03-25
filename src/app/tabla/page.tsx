@@ -2,14 +2,17 @@ import type { Metadata } from 'next';
 import ChampionTable from '@/components/ChampionTable';
 import ItemLegend from '@/components/ItemLegend';
 import Footer from '@/components/Footer';
-import { tableRows, legendItems } from '@/data/tabla';
+import { getTableRows } from '@/db/queries';
+import { legendItems } from '@/data/tabla';
 import styles from './page.module.scss';
 
 export const metadata: Metadata = {
   title: 'TFT Set 16 — Yordle Tabla de Items',
 };
 
-export default function TablaPage() {
+export default async function TablaPage() {
+  const tableRows = await getTableRows(1);
+
   return (
     <>
       <header className={styles.header}>

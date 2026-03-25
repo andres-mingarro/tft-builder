@@ -220,6 +220,33 @@
 .star      { color: var(--gold); font-size: 0.92rem; }
 .starEmpty { color: #1e2e42;     font-size: 0.92rem; }
 
+/* Drag handle */
+.dragHandle {
+  cursor: grab;
+  color: var(--muted);
+  padding: 0 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  user-select: none;
+  opacity: 0.4;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 1;
+    color: var(--gold);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.rowDragging {
+  opacity: 0.5;
+  background: rgba(155, 89, 182, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
 /* Notes */
 .note {
   font-size: 0.77rem;
