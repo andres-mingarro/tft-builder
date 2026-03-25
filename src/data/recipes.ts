@@ -45,6 +45,7 @@ export const recipes: Record<string, [Component, Component]> = {
   'Bramble Vest':          [{ name: 'Chain Vest',           image: `${base}/TFT_Item_ChainVest.png` },          { name: 'Chain Vest',            image: `${base}/TFT_Item_ChainVest.png` }],
   "Warmog's Armor":        [{ name: "Giant's Belt",         image: `${base}/TFT_Item_GiantsBelt.png` },         { name: "Giant's Belt",          image: `${base}/TFT_Item_GiantsBelt.png` }],
   "Zeke's Herald":         [{ name: 'B.F. Sword',           image: `${base}/TFT_Item_BFSword.png` },            { name: "Giant's Belt",          image: `${base}/TFT_Item_GiantsBelt.png` }],
+  'Blue Buff':             [{ name: 'Tear of the Goddess',  image: `${base}/TFT_Item_TearOfTheGoddess.png` },  { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
   'Ionic Spark':           [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Negatron Cloak',        image: `${base}/TFT_Item_NegatronCloak.png` }],
   "Archangel's Staff":     [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
   'Gargoyle Stoneplate':   [{ name: 'Chain Vest',           image: `${base}/TFT_Item_ChainVest.png` },          { name: 'Negatron Cloak',        image: `${base}/TFT_Item_NegatronCloak.png` }],
