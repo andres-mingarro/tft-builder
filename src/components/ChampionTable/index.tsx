@@ -25,7 +25,7 @@ import Tooltip from '@/components/Tooltip';
 import ItemTooltipContent from '@/components/Tooltip/ItemTooltipContent';
 import NoteTooltipContent from '@/components/Tooltip/NoteTooltipContent';
 import ItemPicker from '@/components/ItemPicker';
-import { updateChampionPositions, updateChampionItem } from '@/app/tabla/actions';
+import { updateChampionPositions, updateChampionItem, updateChampionAltItem } from '@/app/tabla/actions';
 import styles from './ChampionTable.module.scss';
 
 const costClass: Record<number, string> = {
@@ -49,9 +49,10 @@ interface ActivePicker {
 interface SortableRowProps {
   row: TableRow;
   onItemClick: (item: TableItem, champId: number, slot: number, rect: DOMRect) => void;
+  onAltItemClick: (item: TableItem, champId: number, slot: number, rect: DOMRect) => void;
 }
 
-function SortableRow({ row, onItemClick }: SortableRowProps) {
+function SortableRow({ row, onItemClick, onAltItemClick }: SortableRowProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: row.id });
 
@@ -111,22 +112,26 @@ function SortableRow({ row, onItemClick }: SortableRowProps) {
             const recipe = recipes[item.name];
             return (
               <div
-                key={item.dbId}
+                key={item.dbId ?? `${row.id}-${slot}`}
                 className={`${styles.itemSlot} item-${item.image.split('/').pop()!.replace('.png', '')}`}
               >
                 <Tooltip content={<ItemTooltipContent item={item} />}>
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={54}
-                    height={54}
-                    unoptimized
-                    style={{ cursor: 'pointer' }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onItemClick(item, row.id, slot, (e.currentTarget as HTMLElement).getBoundingClientRect());
-                    }}
-                  />
+                  <div className={styles.imgInner}>
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={54}
+                      height={54}
+                      unoptimized
+                      style={{ cursor: item.dbId ? 'pointer' : 'default' }}
+                      onClick={(e) => {
+                        if (!item.dbId) return;
+                        e.stopPropagation();
+                        onItemClick(item, row.id, slot, (e.currentTarget as HTMLElement).getBoundingClientRect());
+                      }}
+                    />
+                    {item.dbId && <span className={styles.pencilIcon}>✎</span>}
+                  </div>
                 </Tooltip>
                 {recipe && (
                   <div className={styles.components}>
@@ -150,6 +155,52 @@ function SortableRow({ row, onItemClick }: SortableRowProps) {
           })}
         </div>
       </td>
+      <td>
+        <div className={styles.altItemsCell}>
+          {row.altItems?.map((item, slot) => {
+            const recipe = recipes[item.name];
+            return (
+              <div key={item.dbId ?? `alt-${row.id}-${slot}`} className={styles.altItemSlot}>
+                <Tooltip content={<ItemTooltipContent item={item} />}>
+                  <div className={styles.imgInner}>
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={42}
+                      height={42}
+                      unoptimized
+                      className={styles.altItemImg}
+                      style={{ cursor: item.dbId ? 'pointer' : 'default' }}
+                      onClick={(e) => {
+                        if (!item.dbId) return;
+                        e.stopPropagation();
+                        onAltItemClick(item, row.id, slot, (e.currentTarget as HTMLElement).getBoundingClientRect());
+                      }}
+                    />
+                    {item.dbId && <span className={styles.pencilIcon}>✎</span>}
+                  </div>
+                </Tooltip>
+                {recipe && (
+                  <div className={styles.altComponents}>
+                    {recipe.map((comp, j) => (
+                      <Image
+                        key={j}
+                        src={comp.image}
+                        alt={comp.name}
+                        title={comp.name}
+                        width={21}
+                        height={21}
+                        unoptimized
+                        className={styles.altCompImg}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </td>
     </tr>
   );
 }
@@ -161,6 +212,7 @@ interface ChampionTableProps {
 export default function ChampionTable({ rows: initialRows }: ChampionTableProps) {
   const [rows, setRows] = useState(initialRows);
   const [activePicker, setActivePicker] = useState<ActivePicker | null>(null);
+  const [activeAltPicker, setActiveAltPicker] = useState<ActivePicker | null>(null);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -177,7 +229,14 @@ export default function ChampionTable({ rows: initialRows }: ChampionTableProps)
 
   const handleItemClick = useCallback(
     (item: TableItem, champId: number, slot: number, rect: DOMRect) => {
-      setActivePicker({ itemDbId: item.dbId, currentName: item.name, anchorRect: rect, champId, slot });
+      setActivePicker({ itemDbId: item.dbId!, currentName: item.name, anchorRect: rect, champId, slot });
+    },
+    []
+  );
+
+  const handleAltItemClick = useCallback(
+    (item: TableItem, champId: number, slot: number, rect: DOMRect) => {
+      setActiveAltPicker({ itemDbId: item.dbId!, currentName: item.name, anchorRect: rect, champId, slot });
     },
     []
   );
@@ -185,23 +244,29 @@ export default function ChampionTable({ rows: initialRows }: ChampionTableProps)
   async function handleItemSelect(newItem: Item) {
     if (!activePicker) return;
     const { itemDbId, champId, slot } = activePicker;
-
-    // Optimistic update
     setRows((prev) =>
       prev.map((row) =>
         row.id !== champId
           ? row
-          : {
-              ...row,
-              items: row.items.map((item, i) =>
-                i === slot ? { ...item, name: newItem.name, image: newItem.image } : item
-              ),
-            }
+          : { ...row, items: row.items.map((item, i) => i === slot ? { ...item, name: newItem.name, image: newItem.image } : item) }
       )
     );
-
     setActivePicker(null);
     await updateChampionItem(itemDbId, newItem.name, newItem.image);
+  }
+
+  async function handleAltItemSelect(newItem: Item) {
+    if (!activeAltPicker) return;
+    const { itemDbId, champId, slot } = activeAltPicker;
+    setRows((prev) =>
+      prev.map((row) =>
+        row.id !== champId
+          ? row
+          : { ...row, altItems: row.altItems?.map((item, i) => i === slot ? { ...item, name: newItem.name, image: newItem.image } : item) }
+      )
+    );
+    setActiveAltPicker(null);
+    await updateChampionAltItem(itemDbId, newItem.name, newItem.image);
   }
 
   return (
@@ -214,12 +279,13 @@ export default function ChampionTable({ rows: initialRows }: ChampionTableProps)
               <th>Rol</th>
               <th>Traits</th>
               <th>Items Recomendados</th>
+              <th>Items Alternativos</th>
             </tr>
           </thead>
           <tbody>
             <SortableContext items={rows.map((r) => r.id)} strategy={verticalListSortingStrategy}>
               {rows.map((row) => (
-                <SortableRow key={row.id} row={row} onItemClick={handleItemClick} />
+                <SortableRow key={row.id} row={row} onItemClick={handleItemClick} onAltItemClick={handleAltItemClick} />
               ))}
             </SortableContext>
           </tbody>
@@ -233,6 +299,15 @@ export default function ChampionTable({ rows: initialRows }: ChampionTableProps)
           anchorRect={activePicker.anchorRect}
           onSelect={handleItemSelect}
           onClose={() => setActivePicker(null)}
+        />
+      )}
+      {activeAltPicker && (
+        <ItemPicker
+          currentItem={activeAltPicker.currentName}
+          options={legendItems}
+          anchorRect={activeAltPicker.anchorRect}
+          onSelect={handleAltItemSelect}
+          onClose={() => setActiveAltPicker(null)}
         />
       )}
     </div>

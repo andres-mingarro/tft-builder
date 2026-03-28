@@ -21,7 +21,7 @@ src/
 ├── components/
 │   ├── AugmentsSection/    # grid de augments (prismatic/gold/silver)
 │   ├── CarryItemsSection/  # items por carry con portrait
-│   ├── ChampionTable/      # tabla completa de campeones (usada en /tabla)
+│   ├── ChampionTable/      # tabla de campeones con drag-and-drop, item picker, items alternativos
 │   ├── ChampionsSection/   # grid de campeones con badges carry/unlock
 │   ├── Footer/             # links a Community Dragon / Data Dragon
 │   ├── Header/             # badge, h1 gradiente, meta chips, botón → /tabla
@@ -32,7 +32,8 @@ src/
 │   └── TraitsSection/      # traits activos con dots de color
 └── data/
     ├── build.ts            # datos de la guía: traits, champions, carries, items, augments, tips
-    └── tabla.ts            # datos de la tabla: tableRows, legendItems
+    ├── tabla.ts            # datos de la tabla: tableRows (con altItems), legendItems
+    └── recipes.ts          # recetas de items: componentes por item + itemStats para tooltips
 ```
 
 ## Convenciones
@@ -41,6 +42,25 @@ src/
 - Los datos están centralizados en `src/data/` — nunca hardcodear datos en los componentes
 - Las rutas de imágenes usan `/tft-assets/...` (relativas a `public/`)
 - Los selectores globales de elementos (`thead`, `tbody`, `td`) deben ir **anidados** dentro de una clase en los CSS modules, nunca sueltos
+
+## Modelo de datos — `/tabla`
+
+### `TableRow` (tabla.ts)
+| Campo           | Tipo            | Descripción                                      |
+|-----------------|-----------------|--------------------------------------------------|
+| `id`            | `number`        | PK (coincide con DB)                             |
+| `items`         | `TableItem[]`   | Items principales (3); cada uno con `dbId` de DB |
+| `altItems`      | `Item[]`        | Items alternativos (3); solo lectura, sin DB     |
+| `priority`      | `1–5`           | Estrellas de prioridad                           |
+| `portraitVariant` | `carry\|unlock\|default` | Estilo del borde del portrait       |
+
+- `TableItem` extiende `Item` con `dbId` (FK a `build_champion_items`) para persistir cambios vía item picker
+- `altItems` es opcional y solo se renderiza; no tiene persistencia en DB
+
+### ChampionTable (componente)
+- Drag-and-drop de filas con `@dnd-kit/core` → persiste orden en DB vía `updateChampionPositions`
+- Click en item principal → abre `ItemPicker` → persiste cambio en DB vía `updateChampionItem`
+- Columnas: Campeón · Rol · Traits · Items Recomendados · Items Alternativos
 
 ## Assets
 
@@ -84,3 +104,29 @@ npm run lint   # linter
 |----------|------------------------------------------|
 | `/`      | Guía de build Yordle 8 Reroll completa   |
 | `/tabla` | Tabla de items recomendados por campeón  |
+
+## Fuentes de datos de builds
+
+Los datos de items y composiciones se verifican contra el meta real del parche actual. Fuentes usadas:
+
+| Fuente | URL | Uso |
+|--------|-----|-----|
+| tactics.tools | `https://tactics.tools/units/{champion}` | Estadísticas por campeón: win rate, items más jugados con % play rate y avg placement |
+| u.gg | `https://u.gg/tft/comps/yordle-reroll` | Comp completa con items por rol |
+| TFT Academy | `https://tftacademy.com/tierlist/comps/set-16-8-yordles` | Guía narrativa detallada por campeón |
+| Mobalytics | `https://mobalytics.gg/tft/comps-guide/yordle-reroll-...` | Items alternativos y estrategia |
+
+**Parche verificado:** 16.7 (Set 16 — Lore & Legends)
+
+### Proceso de actualización
+
+1. Buscar parche actual: `TFT current patch [año]`
+2. Buscar comp: `TFT Yordle reroll comp best items [año]`
+3. Fetchear las 3-4 fuentes en paralelo (tactics.tools es la más fiable por datos estadísticos)
+4. Comparar items de cada campeón con los que están en la app
+5. Actualizar `src/data/tabla.ts` (datos estáticos + altItems)
+6. Si cambian items principales: crear script en `src/db/migrate-*.ts` y ejecutar con `npx tsx src/db/migrate-*.ts`
+7. `altItems` solo requiere actualizar `tabla.ts` — no tienen persistencia en DB
+
+### Nota sobre items no disponibles
+Si una fuente recomienda un item que no está en `/tft-assets/items/`, verificar si existe en `/tft-assets/items-ddragon/` (DDragon 16.6.1, ~558 PNGs). Los `altItems` pueden usar la ruta `items-ddragon`; los items principales deben estar en `items/` para funcionar con el item picker.

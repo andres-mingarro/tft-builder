@@ -50,6 +50,15 @@ export const buildChampionItems = sqliteTable('build_champion_items', {
   slot: integer('slot').notNull(), // 1, 2, 3
 });
 
+// Items alternativos de cada campeón en una build
+export const buildChampionAltItems = sqliteTable('build_champion_alt_items', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  buildChampionId: integer('build_champion_id').notNull().references(() => buildChampions.id, { onDelete: 'cascade' }),
+  itemName: text('item_name').notNull(),
+  itemImage: text('item_image').notNull(),
+  slot: integer('slot').notNull(), // 1, 2, 3
+});
+
 // Augments recomendados para una build
 export const buildAugments = sqliteTable('build_augments', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -72,11 +81,19 @@ export const buildTips = sqliteTable('build_tips', {
 // Relaciones
 export const buildChampionsRelations = relations(buildChampions, ({ many }) => ({
   items: many(buildChampionItems),
+  altItems: many(buildChampionAltItems),
 }));
 
 export const buildChampionItemsRelations = relations(buildChampionItems, ({ one }) => ({
   champion: one(buildChampions, {
     fields: [buildChampionItems.buildChampionId],
+    references: [buildChampions.id],
+  }),
+}));
+
+export const buildChampionAltItemsRelations = relations(buildChampionAltItems, ({ one }) => ({
+  champion: one(buildChampions, {
+    fields: [buildChampionAltItems.buildChampionId],
     references: [buildChampions.id],
   }),
 }));

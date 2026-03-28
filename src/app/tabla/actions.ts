@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { buildChampions, buildChampionItems } from '@/db/schema';
+import { buildChampions, buildChampionItems, buildChampionAltItems } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
 export async function updateChampionPositions(updates: { id: number; position: number }[]) {
@@ -21,4 +21,15 @@ export async function updateChampionItem(
     .update(buildChampionItems)
     .set({ itemName, itemImage })
     .where(eq(buildChampionItems.id, itemDbId));
+}
+
+export async function updateChampionAltItem(
+  itemDbId: number,
+  itemName: string,
+  itemImage: string,
+) {
+  await db
+    .update(buildChampionAltItems)
+    .set({ itemName, itemImage })
+    .where(eq(buildChampionAltItems.id, itemDbId));
 }

@@ -188,6 +188,31 @@
   }
 }
 
+/* Lápiz de edición */
+.imgInner {
+  position: relative;
+  display: inline-block;
+
+  &:hover .pencilIcon {
+    opacity: 1;
+  }
+}
+
+.pencilIcon {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--gold);
+  background: rgba(8, 13, 24, 0.85);
+  border-radius: 4px;
+  padding: 2px 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
 .components {
   display: flex;
   gap: 0;
@@ -245,6 +270,55 @@
   opacity: 0.5;
   background: rgba(155, 89, 182, 0.15) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Alt Items */
+.altItemsCell {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.altItemSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.altItemImg {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  background: #0f1929;
+  display: block;
+  opacity: 0.75;
+  transition: transform 0.15s, border-color 0.15s, opacity 0.15s;
+
+  &:hover {
+    transform: scale(1.18);
+    border-color: var(--muted);
+    opacity: 1;
+  }
+}
+
+.altComponents {
+  display: flex;
+  gap: 0;
+  width: 42px;
+}
+
+.altCompImg {
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  background: #0f1929;
+  opacity: 0.7;
 }
 
 /* Notes */
