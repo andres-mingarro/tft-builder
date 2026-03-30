@@ -8,7 +8,7 @@ export interface Trait {
 }
 
 export type ChampionRole = 'carry' | 'unlock' | 'default';
-export type TagType = 'yordle' | 'other';
+export type TagType = 'yordle' | 'noxus' | 'other';
 
 export interface Tag {
   label: string;

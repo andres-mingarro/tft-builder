@@ -15,7 +15,7 @@ export async function getTableRows(buildId: number): Promise<TableRow[]> {
     id: champ.id,
     name: champ.name,
     image: champ.image,
-    cost: champ.cost as 1 | 2 | 3 | 4,
+    cost: champ.cost as 1 | 2 | 3 | 4 | 5,
     portraitVariant: champ.portraitVariant as PortraitVariant,
     roleIcon: champ.roleIcon ?? '',
     roleLabel: champ.roleLabel ?? '',

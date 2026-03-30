@@ -1,4 +1,4 @@
-const base = '/tft-assets/items-ddragon';
+const base = '/tft-assets/items';
 
 export interface Component {
   name: string;
@@ -34,24 +34,24 @@ export const itemStats: Record<string, ItemStats> = {
 };
 
 export const recipes: Record<string, [Component, Component]> = {
-  'Statikk Shiv':         [{ name: 'Recurve Bow',          image: `${base}/TFT_Item_RecurveBow.png` },          { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
-  'Morellonomicon':        [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: "Giant's Belt",          image: `${base}/TFT_Item_GiantsBelt.png` }],
-  'Jeweled Gauntlet':      [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Sparring Gloves',       image: `${base}/TFT_Item_SparringGloves.png` }],
-  'Spear of Shojin':       [{ name: 'B.F. Sword',           image: `${base}/TFT_Item_BFSword.png` },            { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
-  "Rabadon's Deathcap":    [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Needlessly Large Rod',  image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }],
-  'Hextech Gunblade':      [{ name: 'B.F. Sword',           image: `${base}/TFT_Item_BFSword.png` },            { name: 'Needlessly Large Rod',  image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }],
-  "Thief's Gloves":        [{ name: 'Sparring Gloves',      image: `${base}/TFT_Item_SparringGloves.png` },     { name: 'Sparring Gloves',       image: `${base}/TFT_Item_SparringGloves.png` }],
-  "Dragon's Claw":         [{ name: 'Negatron Cloak',       image: `${base}/TFT_Item_NegatronCloak.png` },      { name: 'Negatron Cloak',        image: `${base}/TFT_Item_NegatronCloak.png` }],
-  'Bramble Vest':          [{ name: 'Chain Vest',           image: `${base}/TFT_Item_ChainVest.png` },          { name: 'Chain Vest',            image: `${base}/TFT_Item_ChainVest.png` }],
-  "Warmog's Armor":        [{ name: "Giant's Belt",         image: `${base}/TFT_Item_GiantsBelt.png` },         { name: "Giant's Belt",          image: `${base}/TFT_Item_GiantsBelt.png` }],
-  "Zeke's Herald":         [{ name: 'B.F. Sword',           image: `${base}/TFT_Item_BFSword.png` },            { name: "Giant's Belt",          image: `${base}/TFT_Item_GiantsBelt.png` }],
-  'Blue Buff':             [{ name: 'Tear of the Goddess',  image: `${base}/TFT_Item_TearOfTheGoddess.png` },  { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
-  'Ionic Spark':           [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Negatron Cloak',        image: `${base}/TFT_Item_NegatronCloak.png` }],
-  "Archangel's Staff":     [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
-  'Gargoyle Stoneplate':   [{ name: 'Chain Vest',           image: `${base}/TFT_Item_ChainVest.png` },          { name: 'Negatron Cloak',        image: `${base}/TFT_Item_NegatronCloak.png` }],
-  'Sunfire Cape':          [{ name: "Giant's Belt",         image: `${base}/TFT_Item_GiantsBelt.png` },         { name: 'Chain Vest',            image: `${base}/TFT_Item_ChainVest.png` }],
-  'Frozen Heart':          [{ name: 'Chain Vest',           image: `${base}/TFT_Item_ChainVest.png` },          { name: 'Tear of the Goddess',   image: `${base}/TFT_Item_TearOfTheGoddess.png` }],
-  'Infinity Edge':         [{ name: 'B.F. Sword',           image: `${base}/TFT_Item_BFSword.png` },            { name: 'Sparring Gloves',       image: `${base}/TFT_Item_SparringGloves.png` }],
-  "Guinsoo's Rageblade":   [{ name: 'Needlessly Large Rod', image: `${base}/TFT_Item_NeedlesslyLargeRod.png` }, { name: 'Recurve Bow',           image: `${base}/TFT_Item_RecurveBow.png` }],
-  'Last Whisper':          [{ name: 'Recurve Bow',           image: `${base}/TFT_Item_RecurveBow.png` },          { name: 'Sparring Gloves',       image: `${base}/TFT_Item_SparringGloves.png` }],
+  'Statikk Shiv':         [{ name: 'Recurve Bow',          image: `${base}/RecurveBow.png` },          { name: 'Tear of the Goddess',   image: `${base}/TearOfTheGoddess.png` }],
+  'Morellonomicon':        [{ name: 'Needlessly Large Rod', image: `${base}/NeedlesslyLargeRod.png` }, { name: "Giant's Belt",          image: `${base}/GiantsBelt.png` }],
+  'Jeweled Gauntlet':      [{ name: 'Needlessly Large Rod', image: `${base}/NeedlesslyLargeRod.png` }, { name: 'Sparring Gloves',       image: `${base}/SparringGloves.png` }],
+  'Spear of Shojin':       [{ name: 'B.F. Sword',           image: `${base}/BFSword.png` },            { name: 'Tear of the Goddess',   image: `${base}/TearOfTheGoddess.png` }],
+  "Rabadon's Deathcap":    [{ name: 'Needlessly Large Rod', image: `${base}/NeedlesslyLargeRod.png` }, { name: 'Needlessly Large Rod',  image: `${base}/NeedlesslyLargeRod.png` }],
+  'Hextech Gunblade':      [{ name: 'B.F. Sword',           image: `${base}/BFSword.png` },            { name: 'Needlessly Large Rod',  image: `${base}/NeedlesslyLargeRod.png` }],
+  "Thief's Gloves":        [{ name: 'Sparring Gloves',      image: `${base}/SparringGloves.png` },     { name: 'Sparring Gloves',       image: `${base}/SparringGloves.png` }],
+  "Dragon's Claw":         [{ name: 'Negatron Cloak',       image: `${base}/NegatronCloak.png` },      { name: 'Negatron Cloak',        image: `${base}/NegatronCloak.png` }],
+  'Bramble Vest':          [{ name: 'Chain Vest',           image: `${base}/ChainVest.png` },          { name: 'Chain Vest',            image: `${base}/ChainVest.png` }],
+  "Warmog's Armor":        [{ name: "Giant's Belt",         image: `${base}/GiantsBelt.png` },         { name: "Giant's Belt",          image: `${base}/GiantsBelt.png` }],
+  "Zeke's Herald":         [{ name: 'B.F. Sword',           image: `${base}/BFSword.png` },            { name: "Giant's Belt",          image: `${base}/GiantsBelt.png` }],
+  'Blue Buff':             [{ name: 'Tear of the Goddess',  image: `${base}/TearOfTheGoddess.png` },  { name: 'Tear of the Goddess',   image: `${base}/TearOfTheGoddess.png` }],
+  'Ionic Spark':           [{ name: 'Needlessly Large Rod', image: `${base}/NeedlesslyLargeRod.png` }, { name: 'Negatron Cloak',        image: `${base}/NegatronCloak.png` }],
+  "Archangel's Staff":     [{ name: 'Needlessly Large Rod', image: `${base}/NeedlesslyLargeRod.png` }, { name: 'Tear of the Goddess',   image: `${base}/TearOfTheGoddess.png` }],
+  'Gargoyle Stoneplate':   [{ name: 'Chain Vest',           image: `${base}/ChainVest.png` },          { name: 'Negatron Cloak',        image: `${base}/NegatronCloak.png` }],
+  'Sunfire Cape':          [{ name: "Giant's Belt",         image: `${base}/GiantsBelt.png` },         { name: 'Chain Vest',            image: `${base}/ChainVest.png` }],
+  'Frozen Heart':          [{ name: 'Chain Vest',           image: `${base}/ChainVest.png` },          { name: 'Tear of the Goddess',   image: `${base}/TearOfTheGoddess.png` }],
+  'Infinity Edge':         [{ name: 'B.F. Sword',           image: `${base}/BFSword.png` },            { name: 'Sparring Gloves',       image: `${base}/SparringGloves.png` }],
+  "Guinsoo's Rageblade":   [{ name: 'Needlessly Large Rod', image: `${base}/NeedlesslyLargeRod.png` }, { name: 'Recurve Bow',           image: `${base}/RecurveBow.png` }],
+  'Last Whisper':          [{ name: 'Recurve Bow',           image: `${base}/RecurveBow.png` },          { name: 'Sparring Gloves',       image: `${base}/SparringGloves.png` }],
 };

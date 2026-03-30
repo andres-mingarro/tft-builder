@@ -11,7 +11,7 @@ export interface TableRow {
   id: number;
   name: string;
   image: string;
-  cost: 1 | 2 | 3 | 4;
+  cost: 1 | 2 | 3 | 4 | 5;
   portraitVariant: PortraitVariant;
   roleIcon: string;
   roleLabel: string;
@@ -254,6 +254,34 @@ export const tableRows: TableRow[] = [
     priority: 4,
     note: 'Desbloquear: llegar a nivel 9 con un Yordle o Zaunita con 3 ítems. Rageblade + Jeweled Gauntlet para crits AP continuos.',
   },
+];
+
+export const noxusLegendItems: Item[] = [
+  { name: "Guinsoo's Rageblade", image: '/tft-assets/items/GuinsoosRageblade.png' },
+  { name: 'Last Whisper',        image: '/tft-assets/items/LastWhisper.png' },
+  { name: 'Deathblade',          image: '/tft-assets/items/Deathblade.png' },
+  { name: 'Infinity Edge',       image: '/tft-assets/items/InfinityEdge.png' },
+  { name: "Runaan's Hurricane",  image: '/tft-assets/items/RunaansHurricane.png' },
+  { name: "Thief's Gloves",      image: '/tft-assets/items/ThiefsGloves.png' },
+  { name: 'Adaptive Helm',       image: '/tft-assets/items/AdaptiveHelm.png' },
+  { name: "Sterak's Gage",       image: '/tft-assets/items/SteraksGage.png' },
+  { name: "Titan's Resolve",     image: '/tft-assets/items/TitansResolve.png' },
+  { name: 'Bramble Vest',        image: '/tft-assets/items/BrambleVest.png' },
+  { name: 'Gargoyle Stoneplate', image: '/tft-assets/items/GargoyleStoneplate.png' },
+  { name: "Warmog's Armor",      image: '/tft-assets/items/WarmogsArmor.png' },
+  { name: 'Jeweled Gauntlet',    image: '/tft-assets/items/JeweledGauntlet.png' },
+  { name: 'Spear of Shojin',     image: '/tft-assets/items/SpearOfShojin.png' },
+  { name: "Rabadon's Deathcap",  image: '/tft-assets/items/RabadonsDeathcap.png' },
+  { name: 'Morellonomicon',      image: '/tft-assets/items/Morellonomicon.png' },
+  { name: 'Hextech Gunblade',    image: '/tft-assets/items/HextechGunblade.png' },
+  { name: "Archangel's Staff",   image: '/tft-assets/items/ArchangelsStaff.png' },
+  { name: 'Blue Buff',           image: '/tft-assets/items/BlueBuff.png' },
+  { name: 'Bloodthirster',       image: '/tft-assets/items/Bloodthirster.png' },
+  { name: 'Crownguard',          image: '/tft-assets/items/Crownguard.png' },
+  { name: "Dragon's Claw",       image: '/tft-assets/items/DragonsClaw.png' },
+  { name: 'Ionic Spark',         image: '/tft-assets/items/IonicSpark.png' },
+  { name: 'Sunfire Cape',        image: '/tft-assets/items/SunfireCape.png' },
+  { name: 'Frozen Heart',        image: '/tft-assets/items/FrozenHeart.png' },
 ];
 
 export const legendItems: Item[] = [

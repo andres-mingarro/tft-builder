@@ -20,7 +20,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { TableRow, TableItem, RoleStyle } from '@/data/tabla';
 import { Item } from '@/data/build';
 import { recipes } from '@/data/recipes';
-import { legendItems } from '@/data/tabla';
+import { legendItems as defaultLegendItems } from '@/data/tabla';
 import Tooltip from '@/components/Tooltip';
 import ItemTooltipContent from '@/components/Tooltip/ItemTooltipContent';
 import NoteTooltipContent from '@/components/Tooltip/NoteTooltipContent';
@@ -29,10 +29,10 @@ import { updateChampionPositions, updateChampionItem, updateChampionAltItem } fr
 import styles from './ChampionTable.module.scss';
 
 const costClass: Record<number, string> = {
-  1: styles.c1, 2: styles.c2, 3: styles.c3, 4: styles.c4,
+  1: styles.c1, 2: styles.c2, 3: styles.c3, 4: styles.c4, 5: styles.c5,
 };
 const costLabel: Record<number, string> = {
-  1: '1 Gold', 2: '2 Gold', 3: '3 Gold', 4: '4 Gold',
+  1: '1 Gold', 2: '2 Gold', 3: '3 Gold', 4: '4 Gold', 5: '5 Gold',
 };
 const roleClass: Record<RoleStyle, string> = {
   carry: styles.rCarry, ap: styles.rAp, tank: styles.rTank, flex: styles.rFlex,
@@ -99,7 +99,7 @@ function SortableRow({ row, onItemClick, onAltItemClick }: SortableRowProps) {
           {row.tags.map((tag) => (
             <span
               key={tag.label}
-              className={`${styles.ttag} ${tag.type === 'yordle' ? styles.ttY : styles.ttO}`}
+              className={`${styles.ttag} ${tag.type === 'yordle' ? styles.ttY : tag.type === 'noxus' ? styles.ttN : styles.ttO}`}
             >
               {tag.label}
             </span>
@@ -207,9 +207,10 @@ function SortableRow({ row, onItemClick, onAltItemClick }: SortableRowProps) {
 
 interface ChampionTableProps {
   rows: TableRow[];
+  legendItems?: Item[];
 }
 
-export default function ChampionTable({ rows: initialRows }: ChampionTableProps) {
+export default function ChampionTable({ rows: initialRows, legendItems = defaultLegendItems }: ChampionTableProps) {
   const [rows, setRows] = useState(initialRows);
   const [activePicker, setActivePicker] = useState<ActivePicker | null>(null);
   const [activeAltPicker, setActiveAltPicker] = useState<ActivePicker | null>(null);

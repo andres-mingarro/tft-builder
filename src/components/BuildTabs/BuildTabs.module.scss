@@ -1,0 +1,55 @@
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    background: var(--card);
+    color: var(--text);
+  }
+}
+
+.tabIcon {
+  font-size: 1rem;
+}
+
+.activeYordle {
+  background: rgba(155, 89, 182, 0.18);
+  border-color: var(--yordle);
+  color: var(--yordle-light);
+  box-shadow: 0 0 16px rgba(155, 89, 182, 0.2);
+
+  &:hover {
+    background: rgba(155, 89, 182, 0.25);
+    color: var(--yordle-light);
+  }
+}
+
+.activeNoxus {
+  background: rgba(192, 57, 43, 0.18);
+  border-color: #c0392b;
+  color: #f4a09a;
+  box-shadow: 0 0 16px rgba(192, 57, 43, 0.2);
+
+  &:hover {
+    background: rgba(192, 57, 43, 0.25);
+    color: #f4a09a;
+  }
+}
