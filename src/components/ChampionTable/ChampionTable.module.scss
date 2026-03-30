@@ -108,19 +108,25 @@
   }
 }
 
-.costBadge {
-  display: inline-block;
-  font-size: 0.66rem;
-  font-weight: 700;
-  border-radius: 4px;
-  padding: 1px 6px;
+/* Coins (cost) */
+.coins {
+  display: flex;
+  gap: 1px;
+  margin-top: 3px;
 }
 
-.c1 { background: #4a5568; color: #e2e8f0; }
-.c2 { background: #276749; color: #9ae6b4; }
-.c3 { background: #2b6cb0; color: #90cdf4; }
-.c4 { background: #553c9a; color: #d6bcfa; }
-.c5 { background: linear-gradient(135deg, #7a3a00, #c05000); color: #ffd580; }
+.coin {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+/* Role cell */
+.roleCell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
 
 /* Role badge */
 .roleBadge {

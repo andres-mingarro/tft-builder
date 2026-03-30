@@ -28,12 +28,6 @@ import ItemPicker from '@/components/ItemPicker';
 import { updateChampionPositions, updateChampionItem, updateChampionAltItem } from '@/app/tabla/actions';
 import styles from './ChampionTable.module.scss';
 
-const costClass: Record<number, string> = {
-  1: styles.c1, 2: styles.c2, 3: styles.c3, 4: styles.c4, 5: styles.c5,
-};
-const costLabel: Record<number, string> = {
-  1: '1 Gold', 2: '2 Gold', 3: '3 Gold', 4: '4 Gold', 5: '5 Gold',
-};
 const roleClass: Record<RoleStyle, string> = {
   carry: styles.rCarry, ap: styles.rAp, tank: styles.rTank, flex: styles.rFlex,
 };
@@ -77,12 +71,9 @@ function SortableRow({ row, onItemClick, onAltItemClick }: SortableRowProps) {
             </div>
             <div className={styles.champInfo}>
               <div className={styles.champName}>{row.name}</div>
-              <span className={`${styles.costBadge} ${costClass[row.cost]}`}>
-                {costLabel[row.cost]}
-              </span>
-              <div className={styles.stars}>
-                {Array.from({ length: 5 }, (_, i) => (
-                  <span key={i} className={i < row.priority ? styles.star : styles.starEmpty}>★</span>
+              <div className={styles.coins}>
+                {Array.from({ length: row.cost }, (_, i) => (
+                  <span key={i} className={styles.coin}>🪙</span>
                 ))}
               </div>
             </div>
@@ -90,9 +81,16 @@ function SortableRow({ row, onItemClick, onAltItemClick }: SortableRowProps) {
         </div>
       </td>
       <td>
-        <span className={`${styles.roleBadge} ${roleClass[row.roleStyle]}`}>
-          {row.roleIcon} {row.roleLabel}
-        </span>
+        <div className={styles.roleCell}>
+          <span className={`${styles.roleBadge} ${roleClass[row.roleStyle]}`}>
+            {row.roleIcon} {row.roleLabel}
+          </span>
+          <div className={styles.stars}>
+            {Array.from({ length: 5 }, (_, i) => (
+              <span key={i} className={i < row.priority ? styles.star : styles.starEmpty}>★</span>
+            ))}
+          </div>
+        </div>
       </td>
       <td>
         <div className={styles.traitsCell}>
